@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 400px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .result {
+            font-size: 1.2rem;
+            margin-top: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="text-center mb-4">Calculadora de IMC</h2>
+    <form id="imcForm">
+        <div class="mb-3">
+            <label for="height" class="form-label">Altura (m)</label>
+            <input type="number" class="form-control" id="height" placeholder="Ex: 1.75" required min="0.5" max="2.5" step="0.01">
+        </div>
+        <div class="mb-3">
+            <label for="weight" class="form-label">Peso (kg)</label>
+            <input type="number" class="form-control" id="weight" placeholder="Ex: 70" required min="20" max="300" step="0.1">
+        </div>
+        <button type="button" class="btn btn-primary w-100" onclick="calculateIMC()">Calcular IMC</button>
+    </form>
+    <div id="result" class="result"></div>
+</div>
+
+<script>
+    function calculateIMC() {
+        const height = parseFloat(document.getElementById('height').value);
+        const weight = parseFloat(document.getElementById('weight').value);
+        const resultDiv = document.getElementById('result');
+
+        if (!height || height <= 0 || !weight || weight <= 0) {
+            resultDiv.innerHTML = '<span class="text-danger">Por favor, insira valores válidos.</span>';
+            return;
+        }
+
+        const imc = (weight / (height * height)).toFixed(2);
+        let classification;
+
+        if (imc < 18.5) classification = 'Abaixo do peso';
+        else if (imc < 24.9) classification = 'Peso normal';
+        else if (imc < 29.9) classification = 'Sobrepeso';
+        else classification = 'Obesidade';
+
+        resultDiv.innerHTML = `<span class="text-success">Seu IMC é ${imc} - ${classification}</span>`;
+    }
+</script>
+
+</body>
+</html>
+
